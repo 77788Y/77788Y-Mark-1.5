@@ -1,56 +1,33 @@
-// #include "main.h"
-// #include "subsystems/lift.hpp"
-// #include "subsystems/angler.hpp"
-// #include "subsystems/chassis.hpp"
-// #include "subsystems/intake.hpp"
-// #include "autons.hpp"
+#include "main.h"
+#include "subsystems/lift.hpp"
+#include "subsystems/angler.hpp"
+#include "subsystems/chassis.hpp"
+#include "subsystems/intake.hpp"
+#include "autons.hpp"
 
-// void red_wide_zone() {
+using namespace subsystems;
 
-//   // "slow" turn parameters
-//   TuningParams turn_slow = {
-//     .first_voltage = 5000,
-//     .second_voltage = 3000,
-//     .stop_within_first = 3 * units::DEGREES,
-//     .stop_within_second = 0 * units::DEGREES,
-//     .time_between = 50 * units::MS
-//   };
+void red_wide_zone() {
 
-//   // tare orientation
-//   subsystems::chassis::tare_orientation(0);
+  int start_time = pros::millis();
 
-//   // start intake and move forward, grabbing cubes
-//   subsystems::intake::move_voltage(12000);
-//   move_dist(35 * units::INCHES, 3000, true, tuning_params_slow);
-//   pros::delay(700);
+  // tare orientation
+  chassis::tare_orientation(0);
 
-//   // back out
-//   move_dist(4 * units::INCHES, 2000, false, tuning_params_default_all_cubes);
+  // get first purple cube
+  intake::move_voltage(12000);
+  chassis::move_to(10 * units::INCHES, 3000);
+  pros::delay(300);
+  intake::move_volate(0);
+  chassis::move_to(3 * units::INCHES, 2500);
 
+  // rotate to right angle
+  chassis::rotate_by(45 * units::DEGREES, 1200);
 
-//   // rotate
-//   rotate(95 * units::DEGREES, 3000, true, turn_slow);
+  // intake orange cube while moving to next cube
+  intake::move_voltage(12000);
+  chassis::move_by(25 * units::INCHES, 5000);
 
-//   // make sure cubes are at the bottom of the intake
-//   subsystems::intake::move_voltage(-2500);
-//   pros::delay(700);
-//   subsystems::intake::hold();
+  
 
-//   // move to goal
-//   move_dist(72 * units::INCHES, 6000);
-
-//   // dump load
-//   while (subsystems::angler::pos > subsystems::angler::POS_DEPOSIT + 8 * units::DEGREES) {
-//     subsystems::angler::update_auto_deposit(true);
-//     pros::delay(10);
-//   }
-
-//   // make sure load is fully in place
-//   move_dist(6 * units::INCHES, 800);
-//   subsystems::angler::move_voltage(-12000);
-//   pros::delay(675);
-//   subsystems::angler::hold();
-
-//   // back out
-//   move_dist(-15 * units::INCHES, 1000);
-// }
+}
