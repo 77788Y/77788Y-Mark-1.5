@@ -13,14 +13,16 @@ namespace subsystems {
     pros::Motor m_back_r  (9, pros::E_MOTOR_GEARSET_18, true,  pros::E_MOTOR_ENCODER_DEGREES);
 
     // encoders
-    pros::ADIEncoder enc_l('A', 'B', true);
-    pros::ADIEncoder enc_r('C', 'D', true);
+    pros::ADIEncoder enc_l('E', 'F', true);
+    pros::ADIEncoder enc_r('C', 'D', false);
 
     // position and angle references
     units::Distance dist_ref_l = 0;
     units::Distance dist_ref_r = 0;
     units::Angle orientation_ref = 0;
     units::Angle orientation_absolute = 0;
+    units::Distance dist_l_absolute = 0;
+    units::Distance dist_r_absolute = 0;
 
 
 
@@ -33,10 +35,13 @@ namespace subsystems {
       units::Angle angle_l = enc_l.get_value() * units::DEGREES;
       units::Angle angle_r = enc_r.get_value() * units::DEGREES;
 
-      dist_l = angle_l * WHEEL_RADIUS + dist_ref_l;
-      dist_r = angle_r * WHEEL_RADIUS + dist_ref_r;
+      dist_l_absolute = angle_l * WHEEL_RADIUS + dist_ref_l;
+      dist_r_absolute = angle_r * WHEEL_RADIUS + dist_ref_r;
+
+      dist_l = dist_l_absolute + dist_ref_l;
+      dist_r = dist_r_absolute + dist_ref_r;
       dist_avg = (dist_l + dist_r) * .5;
-      orientation_absolute = (dist_r - dist_l) / CHASSIS_DIAM;
+      orientation_absolute = (dist_r - dist_l) / TRACK_WIDTH;
       orientation = orientation_absolute + orientation_ref;
     }
 
@@ -79,8 +84,8 @@ namespace subsystems {
 
     // reset position
     void tare_position(units::Distance ref) {
-      dist_ref_l = ref - (dist_l - dist_ref_l);
-      dist_ref_r = ref - (dist_r - dist_ref_r);
+      dist_ref_l = ref - dist_l_absolute;
+      dist_ref_r = ref - dist_r_absolute;
 
       update_vars();
     }

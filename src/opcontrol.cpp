@@ -23,14 +23,14 @@ void opcontrol() {
 	units::Angle lift_angles[] = {lift::POS_MIN, lift::POS_LOW_TOWER, lift::POS_HIGH_TOWER};
 
   // flip out (only for skills)
-  while (angler::pos > angler::POS_RETRACTED - 8 * units::DEGREES) angler::move_voltage(12000);
-  while (angler::pos < angler::POS_RETRACTED) angler::move_voltage(-12000);
-  angler::hold();
-  pros::delay(100);
-  while (lift::pos < lift::POS_MIN + 10 * units::DEGREES) lift::move_voltage(12000);
-  lift::move_voltage(-8000);
-  pros::delay(350);
-  lift::hold();
+//   while (angler::pos > angler::POS_RETRACTED - 8 * units::DEGREES) angler::move_voltage(12000);
+//   while (angler::pos < angler::POS_RETRACTED) angler::move_voltage(-12000);
+//   angler::hold();
+//   pros::delay(100);
+//   while (lift::pos < lift::POS_MIN + 10 * units::DEGREES) lift::move_voltage(12000);
+//   lift::move_voltage(-8000);
+//   pros::delay(350);
+//   lift::hold();
 
 
 	while (true) {
@@ -83,8 +83,8 @@ void opcontrol() {
 		}
 
 		// debug
-		// if (controller.btn_left) chassis::tare_orientation(90 * units::DEGREES);
-		if (false && pros::millis() % 250 <= 10) {
+		if (controller.btn_left) chassis::tare_orientation(90 * units::DEGREES);
+		if (true && pros::millis() % 250 <= 10) {
 
 			std::cout << "Angler angle:  " << angler::pos / units::DEGREES << "°" << std::endl;
 			std::cout << "Lift angle:    " << angler::pos / units::DEGREES << "°" << std::endl;

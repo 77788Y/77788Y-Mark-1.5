@@ -9,8 +9,8 @@ namespace subsystems {
 
     ////
     // constants
-    const units::Distance WHEEL_RADIUS = (2.683 / 2) * units::INCHES;
-    const units::Distance CHASSIS_DIAM = 5.0235 * units::INCHES;
+    const units::Distance WHEEL_RADIUS = (2.785 / 2) * units::INCHES;
+    const units::Distance TRACK_WIDTH = 5.8617 * units::INCHES;
 
 
 
