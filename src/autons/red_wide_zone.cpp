@@ -18,7 +18,7 @@ void red_wide_zone() {
   intake::move_voltage(12000);
   chassis::move_to(10 * units::INCHES, 3000);
   pros::delay(300);
-  intake::move_volate(0);
+  intake::move_voltage(0);
   chassis::move_to(3 * units::INCHES, 2500);
 
   // rotate to right angle

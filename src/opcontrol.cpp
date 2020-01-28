@@ -45,7 +45,7 @@ void opcontrol() {
 		}
 
 		// drive
-		if (controller.btn_r1 && controller.btn_r2) chassis::hold();
+		if (controller.btn_left) chassis::hold();
 		else {
 
 			// exponential drive
@@ -71,7 +71,9 @@ void opcontrol() {
 		if (macros::current != macros::CODE_ANGLER_LIFT) {
 
 			// intake
-			if ((controller.btn_r1 - controller.btn_r2) && !(controller.btn_b || controller.btn_x)) intake::move_voltage((controller.btn_r1 - controller.btn_r2) * 12000 + (lift::pos > lift::POS_MIN + 20 * units::DEGREES && !controller.btn_left ? 4000 : 0));
+			if (controller.btn_r1 && controller.btn_r2) intake::move_voltage(-12000);
+			else if (lift::pos > lift::POS_MIN + 20 * units::DEGREES && controller.btn_r2) intake::move_voltage(-6000);
+			else if (controller.btn_r1 - controller.btn_r2) intake::move_voltage((controller.btn_r1 - controller.btn_r2) * 12000);
 			else if (controller.btn_a) intake::move_voltage(-1000);
 			else if (controller.btn_b - controller.btn_x) intake::move_voltage((controller.btn_b - controller.btn_x) * 1000);
 			else intake::hold();
@@ -83,7 +85,7 @@ void opcontrol() {
 		}
 
 		// debug
-		if (controller.btn_left) chassis::tare_orientation(90 * units::DEGREES);
+		// if (controller.btn_left) chassis::tare_orientation(90 * units::DEGREES);
 		if (true && pros::millis() % 250 <= 10) {
 
 			std::cout << "Angler angle:  " << angler::pos / units::DEGREES << "°" << std::endl;

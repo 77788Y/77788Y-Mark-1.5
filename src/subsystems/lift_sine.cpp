@@ -82,7 +82,8 @@ namespace subsystems {
           pros::delay(10);
         }
 
-        hold();
+        if (angle_target == POS_MIN) move_voltage(-1000);
+        else hold();
         std::cout << "ended" << std::endl;
       }
     }

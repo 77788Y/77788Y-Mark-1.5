@@ -47,11 +47,17 @@ namespace subsystems {
     ////
     // control functions
 
+    enum class Side {
+      LEFT,
+      RIGHT,
+      BOTH
+    };
+
     // hold motors
-    void hold();
+    void hold(Side side = Side::BOTH);
 
     // move voltage (separate left and right)
-    void move_voltage(int l, int r);
+    void move_voltage(int l, int r, bool keep_hold = true);
 
     // move voltage (same left/right)
     void move_voltage(int val);
@@ -76,16 +82,36 @@ namespace subsystems {
       double angle_correct_weight = 7500
     ) { move_by(dist - dist_avg, timeout, max_voltage, start_voltage, accel_dist, end_voltage, decel_dist); }
 
-    // rotate by an angle
+    // rotate by an angle (locking one side)
    void rotate_by (
       units::Angle angle,
+      Side lock_side,
       units::Time timeout = -1,
       int max_voltage = 8000,
       int start_voltage = 4000, units::Angle accel_angle = 4 * units::INCHES,
       int end_voltage   = 2000, units::Angle decel_angle = 6 * units::INCHES
     );
 
-    // rotate to an angle
+    // rotate to an angle (locking one side)
+    inline void rotate_to (
+      units::Angle angle,
+      Side lock_side,
+      units::Time timeout = -1,
+      int max_voltage = 8000,
+      int start_voltage = 8000, units::Angle accel_angle = 45 * units::DEGREES,
+      int end_voltage   = 0,    units::Angle decel_angle = 45 * units::DEGREES
+    ) { rotate_by(angle - orientation, lock_side, timeout, max_voltage, start_voltage, accel_angle, end_voltage, decel_angle); }
+
+    // rotate by without lock
+    inline void rotate_by (
+      units::Angle angle,
+      units::Time timeout = -1,
+      int max_voltage = 8000,
+      int start_voltage = 4000, units::Angle accel_angle = 4 * units::INCHES,
+      int end_voltage   = 2000, units::Angle decel_angle = 6 * units::INCHES
+    ) { rotate_by(angle, Side::BOTH, timeout, start_voltage, accel_angle, end_voltage, decel_angle); }
+
+    // rotate to without lock
     inline void rotate_to (
       units::Angle angle,
       units::Time timeout = -1,

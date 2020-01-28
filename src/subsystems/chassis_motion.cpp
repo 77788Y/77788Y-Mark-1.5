@@ -84,13 +84,18 @@ namespace subsystems {
       move_voltage(0);
     }
 
+  ////
+  // rotate
 
+  // relative motion
+    void rotate_by(units::Angle angle, Side side, units::Time timeout, int max_voltage, int start_voltage, units::Angle accel_angle, int end_voltage, units::Angle decel_angle) {
 
-    ////
-    // rotate
-
-    // relative motion
-    void rotate_by(units::Angle angle, units::Time timeout, int max_voltage, int start_voltage, units::Angle accel_angle, int end_voltage, units::Angle decel_angle) {
+      // hold if applicable
+      switch (side) {
+        case (Side::RIGHT): hold(Side::LEFT); break;
+        case (Side::LEFT): hold(Side::RIGHT); break;
+        case (Side::BOTH): break;
+      }
 
       // calculate scale
       double scale = accel_angle + decel_angle > fabs(angle) ? fabs(angle / (accel_angle + decel_angle)) : 1;
@@ -123,13 +128,21 @@ namespace subsystems {
       while ((pros::millis() < interrupt_time || interrupt_time < 0) && sign * (actual_accel_angle - (orientation - starting_pos)) > 0) {
 
         double speed = accel_profile.get_at(orientation - starting_pos);
-        move_voltage(-speed, speed);
+        switch (side) {
+          case (Side::RIGHT): move_voltage(0, speed, true); break;
+          case (Side::LEFT): move_voltage(-speed, 0, true); break;
+          case (Side::BOTH): move_voltage(-speed, speed); break;
+        }
         if (pros::millis() % 100 < 10) std::cout << speed << std::endl;
         pros::delay(10);
       }
 
       // move at constant speed
-      move_voltage(-actual_max_voltage, actual_max_voltage);
+        switch (side) {
+          case (Side::RIGHT): move_voltage(0, actual_max_voltage, true); break;
+          case (Side::LEFT): move_voltage(-actual_max_voltage, 0, true); break;
+          case (Side::BOTH): move_voltage(-actual_max_voltage, actual_max_voltage); break;
+        }
       std::cout << actual_max_voltage << std::endl;
       while ((pros::millis() < interrupt_time || interrupt_time < 0) && sign * ((target_angle - actual_decel_angle) - orientation) > 0) pros::delay(10);
 
@@ -138,12 +151,20 @@ namespace subsystems {
 
         double speed = decel_profile.get_at(actual_decel_angle - (target_angle - orientation));
         if (pros::millis() % 100 < 10) std::cout << speed << std::endl;
-        move_voltage(-speed, speed);
+        switch (side) {
+          case (Side::LEFT): move_voltage(0, speed, true); break;
+          case (Side::RIGHT): move_voltage(-speed, 0, true); break;
+          case (Side::BOTH): move_voltage(-speed, speed); break;
+        }
         pros::delay(10);
       }
 
       // brake
-      move_voltage(500 * sign, -500 * sign);
+      switch (side) {
+        case (Side::RIGHT): move_voltage(0, -500 * sign, true); break;
+        case (Side::LEFT): move_voltage(500 * sign, 0, true); break;
+          case (Side::BOTH): move_voltage(500, -500); break;
+      }
       pros::delay(300);
       move_voltage(0);
     }
