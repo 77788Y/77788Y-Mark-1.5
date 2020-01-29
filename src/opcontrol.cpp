@@ -72,7 +72,7 @@ void opcontrol() {
 
 			// intake
 			if (controller.btn_r1 && controller.btn_r2) intake::move_voltage(-12000);
-			else if (lift::pos > lift::POS_MIN + 20 * units::DEGREES && controller.btn_r2) intake::move_voltage(-6000);
+			else if (lift::pos > lift::POS_MIN + 20 * units::DEGREES && controller.btn_r2) intake::move_voltage(-8000);
 			else if (controller.btn_r1 - controller.btn_r2) intake::move_voltage((controller.btn_r1 - controller.btn_r2) * 12000);
 			else if (controller.btn_a) intake::move_voltage(-1000);
 			else if (controller.btn_b - controller.btn_x) intake::move_voltage((controller.btn_b - controller.btn_x) * 1000);

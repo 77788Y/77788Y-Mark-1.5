@@ -4,6 +4,7 @@ void blue_fivecube();
 void red_fivecube();
 
 void red_wide_zone();
+void red_wide_four();
 void blue_wide_zone();
 
 void skills_auton();

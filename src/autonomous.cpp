@@ -8,10 +8,12 @@
 using namespace subsystems;
 
 void flip_out(){
-
-  while (angler::pos > angler::POS_RETRACTED - 8 * units::DEGREES) angler::move_voltage(12000);
+  lift::move_voltage(-6000);
+  while (angler::pos > angler::POS_RETRACTED - 25 * units::DEGREES) angler::move_voltage(12000);
   while (angler::pos < angler::POS_RETRACTED) angler::move_voltage(-12000);
   angler::hold();
+  lift::move_voltage(0);
+  lift::hold();
   pros::delay(100);
   while (lift::pos < lift::POS_MIN + 10 * units::DEGREES) lift::move_voltage(12000);
   lift::move_voltage(-8000);
@@ -22,12 +24,13 @@ void flip_out(){
 
 void autonomous() {
 
-  chassis::move_voltage(-2000);
+  chassis::move_voltage(-5000);
   flip_out();
 
-  red_fivecube();
+  // red_fivecube();
   // blue_fivecube();
   // red_wide_zone();
+  red_wide_four();
   // blue_wide_zone();
   // skills_auton();
 }

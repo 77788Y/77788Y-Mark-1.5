@@ -35,7 +35,7 @@ namespace subsystems {
     void move_voltage(int val);
 
     // update auto deposit
-    void update_auto_deposit(bool speedy = false);
+    void update_auto_deposit(int speedy = 0);
 
     // hold position
     void hold();
