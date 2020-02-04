@@ -33,7 +33,7 @@ namespace subsystems {
         std::cout << angle_target << "\t" << pos << std::endl;
 
         // make sure angler is in the right place
-        angler::m_motor.move_absolute(320, 100);
+        angler::m_motor.move_absolute(320, 200);
         while (fabs(angler::m_motor.get_position() - 320) >= 3 && !task -> notify_take(false, 0)) pros::delay(10); // dirty hack
         if (task -> notify_take(false, 0)) break;
 

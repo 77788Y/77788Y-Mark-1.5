@@ -9,7 +9,7 @@ namespace subsystems {
     // motors, sensors, etc
 
     // motor
-    pros::Motor m_motor (2, pros::E_MOTOR_GEARSET_36, true, pros::E_MOTOR_ENCODER_DEGREES);
+    pros::Motor m_motor (2, pros::E_MOTOR_GEARSET_18, true, pros::E_MOTOR_ENCODER_DEGREES);
 
 
 
@@ -23,14 +23,25 @@ namespace subsystems {
 
     // move voltage (same left/right)
     void move_voltage(int val) {
-      if (m_motor.get_brake_mode() != pros::E_MOTOR_BRAKE_COAST) m_motor.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
+      // if (m_motor.get_brake_mode() != pros::E_MOTOR_BRAKE_COAST) m_motor.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
       m_motor.move_voltage(val);
+    }
+
+    // move velocity
+    void move_velocity(int val) {
+      // if (m_motor.get_brake_mode() != pros::E_MOTOR_BRAKE_COAST) m_motor.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
+      if (abs(val) > 5) m_motor.move_velocity(val);
+      else m_motor.move_velocity(0);
     }
 
     // update auto deposit
     void update_auto_deposit(int speedy) {
-      if (pos < POS_DEPOSIT + 33 * units::DEGREES) move_voltage((pos - POS_DEPOSIT) * (7250.0 + (speedy * 7000)));
-      else move_voltage(12000);
+      if (m_motor.get_current_draw() > 8000) {
+      if (m_motor.get_brake_mode() != pros::E_MOTOR_BRAKE_COAST) m_motor.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
+        move_voltage(0);
+      }
+      else if (pos > POS_DEPOSIT - 2 * units::DEGREES) move_velocity((pos - POS_DEPOSIT) * (175 + (speedy * 75)));
+      else move_voltage(0);
     }
 
     // hold position
