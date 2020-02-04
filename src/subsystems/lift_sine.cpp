@@ -12,17 +12,17 @@ namespace subsystems {
 
     // accel/decel distance
     static const units::Angle ACCEL_DIST = 15 * units::DEGREES;
-    static const units::Angle DECEL_DIST = 25 * units::DEGREES;
+    static const units::Angle DECEL_DIST = 15 * units::DEGREES;
 
     // start/end voltage
-    static const int START_VOLTAGE = 4200;
-    static const int END_VOLTAGE = 4200;
+    static const int START_VOLTAGE = 4300;
+    static const int END_VOLTAGE = 4300;
 
     // max voltage
     static const int MAX_VOLTAGE = 12000;
 
     // bias voltage
-    static const int BIAS_VOLTAGE = 1250;
+    static const int BIAS_VOLTAGE = 1000;
 
     void task_update(void*) {
 
@@ -82,8 +82,9 @@ namespace subsystems {
           pros::delay(10);
         }
 
-        if (angle_target == POS_MIN) move_voltage(-1000);
-        else hold();
+        // if (angle_target == POS_MIN) move_voltage(-3000);
+        // else hold();
+        hold();
         std::cout << "ended" << std::endl;
       }
     }

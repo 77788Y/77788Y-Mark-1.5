@@ -163,7 +163,7 @@ namespace subsystems {
       switch (side) {
         case (Side::RIGHT): move_voltage(0, -500 * sign, true); break;
         case (Side::LEFT): move_voltage(500 * sign, 0, true); break;
-          case (Side::BOTH): move_voltage(500, -500); break;
+        case (Side::BOTH): move_voltage(500 * sign, -500 * sign); break;
       }
       pros::delay(300);
       move_voltage(0);

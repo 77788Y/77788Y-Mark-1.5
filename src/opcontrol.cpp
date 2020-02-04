@@ -20,17 +20,22 @@ void opcontrol() {
 
 	// lift control data
 	int lift_index = 0;
-	units::Angle lift_angles[] = {lift::POS_MIN, lift::POS_LOW_TOWER, lift::POS_HIGH_TOWER};
+	units::Angle lift_angles[] = {lift::POS_MIN, lift::POS_LOW_TOWER, lift::POS_HIGH_TOWER, lift::POS_MAX};
 
-  // flip out (only for skills)
-//   while (angler::pos > angler::POS_RETRACTED - 8 * units::DEGREES) angler::move_voltage(12000);
-//   while (angler::pos < angler::POS_RETRACTED) angler::move_voltage(-12000);
-//   angler::hold();
-//   pros::delay(100);
-//   while (lift::pos < lift::POS_MIN + 10 * units::DEGREES) lift::move_voltage(12000);
-//   lift::move_voltage(-8000);
-//   pros::delay(350);
-//   lift::hold();
+  int start_time = pros::millis();
+  units::Angle lift_target = lift::POS_MIN;
+
+  // lift::move_voltage(-6000);
+  // while (angler::pos > angler::POS_RETRACTED - 25 * units::DEGREES && pros::millis() - start_time < 600) angler::move_voltage(12000);
+  // while (angler::pos < angler::POS_RETRACTED && pros::millis() - start_time < 1500) angler::move_voltage(-12000);
+  // angler::hold();
+  // lift::move_voltage(0);
+  // lift::hold();
+  // pros::delay(100);
+  // while (lift::pos < lift::POS_MIN + 10 * units::DEGREES && pros::millis() - start_time < 1500) lift::move_voltage(12000);
+  // lift::move_voltage(-8000);
+  // pros::delay(350);
+  // lift::move_voltage(-3000);
 
 
 	while (true) {
@@ -59,20 +64,42 @@ void opcontrol() {
 		if (controller.btn_l1_new == 1) {
 
 			++lift_index;
-			if (lift_index > 2) lift_index = 2;
-			lift::goto_async(lift_angles[lift_index]);
+			if (lift_index > 3) lift_index = 3;
+      lift_target = lift_angles[lift_index];
+      lift::goto_async(lift_target);
 		}
 		else if (controller.btn_l2_new == 1) {
 
 			lift_index = 0;
-			lift::goto_async(lift_angles[lift_index]);
+      lift_target = lift_angles[lift_index];
+      lift::goto_async(lift_target);
 		}
+    else if (
+      lift_target > lift::POS_MIN &&
+      lift::pos > lift::POS_MIN + 20*units::DEGREES &&
+      controller.analog_left_y < -.1 &&
+      controller.analog_right_y < -.1 &&
+      lift_target <= lift_angles[lift_index]
+    ) {
+      lift_target = lift_angles[lift_index] + 10 * units::DEGREES;
+      lift::goto_async(lift_target);
+    }
+    else if (
+      lift::pos > lift::POS_MIN + 20*units::DEGREES &&
+      controller.analog_left_y >= -.1 &&
+      controller.analog_right_y >= -.1 &&
+      lift_target > lift_angles[lift_index]
+    ) {
+      lift_target = lift_angles[lift_index];
+      lift::goto_async(lift_target);
+    }
 
 		if (macros::current != macros::CODE_ANGLER_LIFT) {
 
 			// intake
 			if (controller.btn_r1 && controller.btn_r2) intake::move_voltage(-12000);
-			else if (lift::pos > lift::POS_MIN + 20 * units::DEGREES && controller.btn_r2) intake::move_voltage(-8000);
+      else if (lift::pos > lift::POS_LOW_TOWER + 20 * units::DEGREES && controller.btn_r2) intake::move_voltage(-5500);
+			else if (lift::pos > lift::POS_MIN + 20 * units::DEGREES && controller.btn_r2) intake::move_voltage(-7000);
 			else if (controller.btn_r1 - controller.btn_r2) intake::move_voltage((controller.btn_r1 - controller.btn_r2) * 12000);
 			else if (controller.btn_a) intake::move_voltage(-1000);
 			else if (controller.btn_b - controller.btn_x) intake::move_voltage((controller.btn_b - controller.btn_x) * 1000);

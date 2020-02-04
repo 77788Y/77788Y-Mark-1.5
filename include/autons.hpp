@@ -1,10 +1,11 @@
 #pragma once
 
-void blue_fivecube();
-void red_fivecube();
+void blue_unprotected_six();
+void red_unprotected_six();
 
-void red_wide_zone();
-void red_wide_four();
-void blue_wide_zone();
+void red_protected_five();
+void red_protected_four();
+void blue_protected_zone();
+// void blue_protected_five();
 
 void skills_auton();

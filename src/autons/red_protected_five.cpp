@@ -7,7 +7,7 @@
 
 using namespace subsystems;
 
-void red_wide_zone() {
+void red_protected_five() {
 
   int start_time = pros::millis();
 
