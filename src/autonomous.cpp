@@ -31,7 +31,6 @@ void autonomous() {
 
 // red
   // red_unprotected_six();
-  // red_protected_five();
   // red_protected_four();
 
 // blue
