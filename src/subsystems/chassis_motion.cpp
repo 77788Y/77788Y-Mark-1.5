@@ -63,7 +63,7 @@ namespace subsystems {
       }
 
       // follow decel profile
-      while ((pros::millis() < interrupt_time || interrupt_time < 0) && sign * (target_dist - dist_avg) > 0) {
+      while ((pros::millis() < interrupt_time || interrupt_time < 0) && sign * (target_dist - dist_avg) > 0 * units::INCHES) {
 
         // calculate raw voltage
         double speed = decel_profile.get_at(actual_decel_dist - (target_dist - dist_avg));
@@ -79,9 +79,8 @@ namespace subsystems {
       }
 
       // brake
-      move_voltage(-500 * sign);
+      hold();
       pros::delay(300);
-      move_voltage(0);
     }
 
   ////
@@ -160,13 +159,8 @@ namespace subsystems {
       }
 
       // brake
-      switch (side) {
-        case (Side::RIGHT): move_voltage(0, -500 * sign, true); break;
-        case (Side::LEFT): move_voltage(500 * sign, 0, true); break;
-        case (Side::BOTH): move_voltage(500 * sign, -500 * sign); break;
-      }
+      hold();
       pros::delay(300);
-      move_voltage(0);
     }
   }
 }

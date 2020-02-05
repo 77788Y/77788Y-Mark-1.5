@@ -18,43 +18,56 @@ void skills_auton() {
 
   // first tower----------------------------------------------------------------
 
+  // fix orientation
+  chassis::rotate_to(0 * units::DEGREES);
+
   // intake cube
-  intake::move_voltage(12000);
-  chassis::move_to(8 * units::INCHES);
+  macros::notify(macros::CODE_INTAKE_TOWER);
+  chassis::move_to(13 * units::INCHES);
   intake::move_voltage(0);
 
   // set lift position
   lift::goto_sync(lift::POS_HIGH_TOWER);
 
   // move to tower
+  chassis::rotate_to(80 * units::DEGREES);
   chassis::rotate_to(90 * units::DEGREES);
-  chassis::move_by(12 * units::INCHES);
+  chassis::move_by(7 * units::INCHES);
 
   // deposit cube
-  intake::move_voltage(-5000);
-  pros::delay(500);
+  intake::move_voltage(-6000);
+  pros::delay(1000);
   intake::move_voltage(0);
 
 
   // second tower---------------------------------------------------------------
 
+  // start moving to second tower
+  chassis::move_by(-24 * units::INCHES);
+
+  // rotate to cube
+  chassis::rotate_to(8 * units::DEGREES);
+  chassis::rotate_to(0 * units::DEGREES);
+  chassis::move_by(-6 * units::INCHES);
+
   // reset lift
-  chassis::move_by(-3 * units::INCHES);
   lift::goto_sync(lift::POS_MIN);
+
+  // intake cube
+  macros::notify(macros::CODE_INTAKE_TOWER);
+  chassis::move_by(12 * units::INCHES);
+  chassis::move_by(-2 * units::INCHES);
+  intake::move_voltage(0);
 
   // rotate to tower
   chassis::rotate_to(-35 * units::DEGREES);
-
-  // intake cube
-  intake::move_voltage(6000);
-  chassis::move_by(18 * units::INCHES);
-  intake::move_voltage(0);
+  chassis::rotate_to(-45 * units::DEGREES);
 
   // set lift position
   lift::goto_sync(lift::POS_LOW_TOWER);
 
   // move to tower
-  chassis::move_by(12 * units::INCHES);
+  chassis::move_by(8 * units::INCHES);
 
   // deposit cube
   intake::move_voltage(-5000);
