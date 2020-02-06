@@ -97,13 +97,16 @@ void opcontrol() {
 		if (macros::current != macros::CODE_ANGLER_LIFT) {
 
 			// intake
+			std::cout << cube_detect.get_value() << "\t" << angler::pos / units::DEGREES << std::endl;
 			if (controller.btn_r1 && controller.btn_r2) intake::move_voltage(-12000);
-      else if (lift::pos > lift::POS_LOW_TOWER + 20 * units::DEGREES && controller.btn_r2) intake::move_voltage(-5500);
-			else if (lift::pos > lift::POS_MIN + 20 * units::DEGREES && controller.btn_r2) intake::move_voltage(-7000);
-			else if (controller.btn_r1 - controller.btn_r2) intake::move_voltage((controller.btn_r1 - controller.btn_r2) * 12000);
+      else if (lift::pos > lift::POS_LOW_TOWER + 20 * units::DEGREES && controller.btn_r2_new == 1) intake::move_voltage(-5500);
+			else if (lift::pos > lift::POS_MIN + 20 * units::DEGREES && controller.btn_r2_new == 1) intake::move_voltage(-7000);
+			else if (controller.btn_r1_new == 1) intake::move_voltage(12000);
+			else if (controller.btn_r2_new == 1) intake::move_voltage(-12000);
 			else if (controller.btn_a) intake::move_voltage(-1000);
 			else if (controller.btn_b - controller.btn_x) intake::move_voltage((controller.btn_b - controller.btn_x) * 1000);
-			else intake::hold();
+			else if (cube_detect.get_value() < 1700 && angler::pos < angler::POS_LIFT + 4 * units::DEGREES) intake::hold();
+			else if ((controller.btn_r1_new == -1 || controller.btn_r2_new == -1 || controller.btn_a_new == -1 || controller.btn_b_new == -1) && !controller.btn_r1 && !controller.btn_r2) intake::hold();
 
 			// angler
 			if (controller.btn_a) angler::update_auto_deposit();

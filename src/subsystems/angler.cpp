@@ -40,7 +40,7 @@ namespace subsystems {
       if (m_motor.get_brake_mode() != pros::E_MOTOR_BRAKE_COAST) m_motor.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
         move_voltage(0);
       }
-      else if (pos > POS_DEPOSIT - 2 * units::DEGREES) move_velocity((pos - POS_DEPOSIT) * (175 + (speedy * 75)));
+      else if (pos > POS_DEPOSIT - 2 * units::DEGREES) move_velocity((pos - POS_DEPOSIT) * (170 + (speedy * 70)));
       else move_voltage(0);
     }
 
