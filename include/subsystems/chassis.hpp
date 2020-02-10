@@ -82,6 +82,11 @@ namespace subsystems {
       double angle_correct_weight = 10000
     ) { move_by(dist - dist_avg, timeout, max_voltage, start_voltage, accel_dist, end_voltage, decel_dist); }
 
+    void move_to_bang(units::Distance dist, int voltage = 6000);
+    void move_by_bang(units::Distance dist, int voltage = 6000);
+    void rotate_to_bang(units::Angle angle, int voltage = 4000);
+    void rotate_by_bang(units::Angle angle, int voltage = 4000);
+
     // rotate by an angle (locking one side)
    void rotate_by (
       units::Angle angle,

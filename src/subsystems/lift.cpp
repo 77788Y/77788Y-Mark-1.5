@@ -35,6 +35,11 @@ namespace subsystems {
     }
 
 
+    void move_absolute(double pos, int velocity) {
+      m_motor.move_absolute(pos, velocity);
+    }
+
+
     // tell async controller to update its target
     void goto_async(units::Angle pos) {
 

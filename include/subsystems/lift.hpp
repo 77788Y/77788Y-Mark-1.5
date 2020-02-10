@@ -12,10 +12,10 @@ namespace subsystems {
     // macros
 
     // positions
-    const units::Angle POS_MAX = 50 * units::DEGREES;
+    const units::Angle POS_MAX = 62 * units::DEGREES;
     const units::Angle POS_MIN = -31 * units::DEGREES;
-  const units::Angle POS_LOW_TOWER = 19.5 * units::DEGREES;
-    const units::Angle POS_HIGH_TOWER = 38 * units::DEGREES;
+    const units::Angle POS_LOW_TOWER = 28 * units::DEGREES;
+    const units::Angle POS_HIGH_TOWER = 45 * units::DEGREES;
 
 
     ////
@@ -60,6 +60,7 @@ namespace subsystems {
     void move_voltage(int val);
 
     // goto position
+    void move_absolute(double pos, int velocity = 100);
     void goto_async(units::Angle pos);
     bool goto_sync(units::Angle pos, units::Time timeout = -1);
 

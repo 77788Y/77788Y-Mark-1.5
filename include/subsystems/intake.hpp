@@ -18,6 +18,7 @@ namespace subsystems {
     // control functions
 
     // move voltage
+    void move_voltage(int l, int r);
     void move_voltage(int val);
 
     // hold position

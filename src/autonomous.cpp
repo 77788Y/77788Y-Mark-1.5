@@ -12,7 +12,7 @@ void flip_out(){
 
   lift::move_voltage(-6000);
   while (angler::pos > angler::POS_RETRACTED - 25 * units::DEGREES && pros::millis() - start_time < 600) angler::move_voltage(12000);
-  while (angler::pos < angler::POS_RETRACTED && pros::millis() - start_time < 1000) angler::move_voltage(-12000);
+  while (angler::pos < angler::POS_RETRACTED && pros::millis() - start_time < 1500) angler::move_voltage(-12000);
   angler::hold();
   lift::move_voltage(0);
   lift::hold();
@@ -21,6 +21,9 @@ void flip_out(){
   lift::move_voltage(-8000);
   pros::delay(350);
   lift::move_voltage(-3000);
+  pros::delay(200);
+  lift::m_motor.tare_position();
+  lift::hold();
 }
 
 

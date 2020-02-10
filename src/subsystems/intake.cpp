@@ -16,11 +16,14 @@ namespace subsystems {
     // control functions
 
     // move voltage
-    void move_voltage(int val) {
+    void move_voltage(int l, int r) {
       if (m_left.get_brake_mode() != pros::E_MOTOR_BRAKE_COAST) m_left.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
       if (m_right.get_brake_mode() != pros::E_MOTOR_BRAKE_COAST) m_right.set_brake_mode(pros::E_MOTOR_BRAKE_COAST);
-      m_left.move_voltage(val);
-      m_right.move_voltage(val);
+      m_left.move_voltage(l);
+      m_right.move_voltage(r);
+    }
+    void move_voltage(int val) {
+      move_voltage(val, val);
     }
 
     // hold position

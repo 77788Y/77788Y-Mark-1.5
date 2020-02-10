@@ -25,17 +25,20 @@ void opcontrol() {
   int start_time = pros::millis();
   units::Angle lift_target = lift::POS_MIN;
 
-  // lift::move_voltage(-6000);
-  // while (angler::pos > angler::POS_RETRACTED - 25 * units::DEGREES && pros::millis() - start_time < 600) angler::move_voltage(12000);
-  // while (angler::pos < angler::POS_RETRACTED && pros::millis() - start_time < 1500) angler::move_voltage(-12000);
-  // angler::hold();
-  // lift::move_voltage(0);
-  // lift::hold();
-  // pros::delay(100);
-  // while (lift::pos < lift::POS_MIN + 10 * units::DEGREES && pros::millis() - start_time < 1500) lift::move_voltage(12000);
-  // lift::move_voltage(-8000);
-  // pros::delay(350);
-  // lift::move_voltage(-3000);
+  lift::move_voltage(-6000);
+  while (angler::pos > angler::POS_RETRACTED - 25 * units::DEGREES && pros::millis() - start_time < 600) angler::move_voltage(12000);
+  while (angler::pos < angler::POS_RETRACTED && pros::millis() - start_time < 1500) angler::move_voltage(-12000);
+  angler::hold();
+  lift::move_voltage(0);
+  lift::hold();
+  pros::delay(100);
+  while (lift::pos < lift::POS_MIN + 10 * units::DEGREES && pros::millis() - start_time < 1500) lift::move_voltage(12000);
+  lift::move_voltage(-8000);
+  pros::delay(350);
+  lift::move_voltage(-3000);
+  pros::delay(200);
+  lift::m_motor.tare_position();
+  lift::hold();
 
 	bool started_in_intake = false;
 
@@ -83,7 +86,7 @@ void opcontrol() {
       controller.analog_right_y < -.1 &&
       lift_target <= lift_angles[lift_index]
     ) {
-      lift_target = lift_angles[lift_index] + 10 * units::DEGREES;
+      lift_target = lift_angles[lift_index] + 8 * units::DEGREES;
       lift::goto_async(lift_target);
     }
     else if (
@@ -99,7 +102,7 @@ void opcontrol() {
 		if (macros::current != macros::CODE_ANGLER_LIFT) {
 
 			// intake
-			std::cout << cube_detect.get_value() << "\t" << angler::pos / units::DEGREES << std::endl;
+			// std::cout << cube_detect.get_value() << "\t" << angler::pos / units::DEGREES << std::endl;
 			if (controller.btn_r1 && controller.btn_r2) intake::move_voltage(-12000);
       else if (lift::pos > lift::POS_LOW_TOWER + 20 * units::DEGREES && controller.btn_r2_new == 1) intake::move_voltage(-5500);
 			else if (lift::pos > lift::POS_MIN + 20 * units::DEGREES && controller.btn_r2_new == 1) intake::move_voltage(-7000);
@@ -112,9 +115,13 @@ void opcontrol() {
 				started_in_intake = cube_detect.get_value() < 1800;
 			}
 			else if (controller.btn_a) intake::move_voltage(-1000);
+      else if (controller.btn_up_new == 1) {
+        intake::move_voltage(12000, -12000);
+				started_in_intake = cube_detect.get_value() < 1800;
+      }
 			else if (controller.btn_b - controller.btn_x) intake::move_voltage((controller.btn_b - controller.btn_x) * 1000);
-			else if (cube_detect.get_value() < 1700 && angler::pos < angler::POS_LIFT + 4 * units::DEGREES && !started_in_intake) intake::hold();
-			else if ((controller.btn_r1_new == -1 || controller.btn_r2_new == -1 || controller.btn_a_new == -1 || controller.btn_b_new == -1) && !controller.btn_r1 && !controller.btn_r2) intake::hold();
+			// else if (cube_detect.get_value() < 1700 && angler::pos < angler::POS_LIFT + 4 * units::DEGREES && !started_in_intake) intake::hold();
+			else if ((controller.btn_up_new == -1 || controller.btn_r1_new == -1 || controller.btn_r2_new == -1 || controller.btn_a_new == -1 || controller.btn_b_new == -1) && !controller.btn_r1 && !controller.btn_r2) intake::hold();
 
 			// angler
 			if (controller.btn_a) angler::update_auto_deposit();
@@ -124,7 +131,7 @@ void opcontrol() {
 
 		// debug
 		// if (controller.btn_left) chassis::tare_orientation(90 * units::DEGREES);
-		if (true && pros::millis() % 250 <= 10) {
+		if (false && pros::millis() % 250 <= 10) {
 
 			std::cout << "Angler angle:  " << angler::pos / units::DEGREES << "°" << std::endl;
 			std::cout << "Lift angle:    " << angler::pos / units::DEGREES << "°" << std::endl;
