@@ -126,7 +126,7 @@ void opcontrol() {
 			// angler
 			if (controller.btn_a) angler::update_auto_deposit();
 			else if (controller.btn_a_new == -1) angler::hold();
-			else if (controller.btn_b_new == 1 && lift::pos) angler::m_motor.move_absolute(0, 200);
+			else if (controller.btn_b_new == 1 && lift::pos < lift::POS_HIGH_TOWER) angler::m_motor.move_absolute(0, 200);
 		}
 
 		// debug
