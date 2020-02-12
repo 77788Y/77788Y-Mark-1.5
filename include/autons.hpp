@@ -1,9 +1,16 @@
 #pragma once
 
-void blue_unprotected_six();
-void red_unprotected_six();
+#include <memory>
 
-void red_protected_four();
-void blue_protected_zone();
+namespace autons {
 
-void skills_auton();
+  inline void (*selected)() = nullptr;
+
+  void blue_unprotected_six();
+  void red_unprotected_six();
+
+  void red_protected_four();
+  void blue_protected_four();
+
+  void skills_auton();
+}

@@ -1,7 +1,7 @@
 #include "main.h"
 #include "macros.hpp"
-#include "display.hpp"
 #include "subsystems/async_control.hpp"
+#include "auton_selector.hpp"
 #include <memory>
 
 void initialize() {
@@ -12,7 +12,8 @@ void initialize() {
   subsystems::lift::task = std::make_unique<pros::Task>(pros::Task(subsystems::lift::task_update, nullptr, "lift"));
 
   // initialize display
-  display::init();
+  // display::init();
+  auton_selector::create_display();
 }
 
 void disabled() {

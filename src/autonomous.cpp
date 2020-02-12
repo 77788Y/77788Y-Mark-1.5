@@ -32,6 +32,9 @@ void autonomous() {
   chassis::move_voltage(-5000);
   flip_out();
 
+  try {if (autons::selected != nullptr) autons::selected();}
+  catch (...) {}
+
 // red
   // red_unprotected_six();
   // red_protected_four();
@@ -41,5 +44,5 @@ void autonomous() {
   // blue_protected_four();
 
 // skills
-  skills_auton();
+  autons::skills_auton();
 }
