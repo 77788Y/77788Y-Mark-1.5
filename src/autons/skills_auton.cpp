@@ -18,6 +18,9 @@ void skills_auton() {
 
   // first tower----------------------------------------------------------------
 
+  // set angler position so it can intake a cube to place in tower
+  angler::m_motor.move_absolute(320, 200);
+
   // fix orientation
   chassis::rotate_to(0 * units::DEGREES);
 
@@ -26,12 +29,12 @@ void skills_auton() {
   chassis::move_to(13 * units::INCHES);
   intake::move_voltage(0);
 
+  // set lift position
+  lift::goto_async(lift::POS_HIGH_TOWER);
+
   // rotate to tower
   chassis::rotate_to_bang(86 * units::DEGREES, 5000);
   chassis::rotate_to_bang(90 * units::DEGREES);
-
-  // set lift position
-  lift::goto_sync(lift::POS_HIGH_TOWER);
 
   // move to tower
   chassis::move_by(11 * units::INCHES);
@@ -51,14 +54,14 @@ void skills_auton() {
   chassis::rotate_to_bang(10 * units::DEGREES, 5000);
   chassis::rotate_to_bang(0 * units::DEGREES);
 
+  // reset lift
+  lift::goto_async(lift::POS_MIN);
+
   // calibrate orientation
   chassis::move_by(-4 * units::INCHES);
   chassis::move_voltage(-8000);
   pros::delay(1000);
   chassis::move_voltage(0);
-
-  // reset lift
-  lift::goto_sync(lift::POS_MIN);
 
   // intake cube
   macros::notify(macros::CODE_INTAKE_TOWER);
@@ -85,20 +88,19 @@ void skills_auton() {
   // first stack----------------------------------------------------------------
 
   // reset lift
-  chassis::move_by(-5.25 * units::INCHES);
-  lift::goto_sync(lift::POS_MIN);
-
-  // reset angler
-  angler::m_motor.move_absolute(0, 200);
+  chassis::move_by(-7.25 * units::INCHES);
+  lift::goto_async(lift::POS_MIN);
 
   // calibrate orientation
-  chassis::move_by(-2 * units::INCHES);
   chassis::rotate_to_bang(0 * units::DEGREES, 5000);
   chassis::move_by(-7 * units::INCHES);
   chassis::move_voltage(-8000);
   pros::delay(1200);
   chassis::move_voltage(0);
   chassis::tare_orientation(0);
+
+  // reset angler
+  angler::m_motor.move_absolute(0, 200);
 
   // intake cubes for stack
   intake::move_voltage(12000);
@@ -131,12 +133,12 @@ void skills_auton() {
 
   // third tower----------------------------------------------------------------
 
+  // reset angler
+  angler::m_motor.move_absolute(320, 200);
+
   // rotate to cube
   chassis::rotate_to_bang(-168 * units::DEGREES, 5000);
   chassis::rotate_to_bang(-185 * units::DEGREES);
-
-  // reset angler
-  angler::m_motor.move_absolute(0, 200);
 
   // intake cube
   macros::notify(macros::CODE_INTAKE_TOWER);
@@ -158,7 +160,7 @@ void skills_auton() {
 
   // back out
   chassis::move_by(-5 * units::INCHES);
-  lift::goto_sync(lift::POS_MIN);
+  lift::goto_async(lift::POS_MIN);
 
   // straigten out
   chassis::rotate_to_bang(-180 * units::DEGREES, 5000);
