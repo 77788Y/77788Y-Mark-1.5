@@ -13,6 +13,8 @@ void flip_out(){
   lift::move_voltage(-6000);
   while (angler::pos > angler::POS_RETRACTED - 25 * units::DEGREES && pros::millis() - start_time < 600) angler::move_voltage(12000);
   while (angler::pos < angler::POS_RETRACTED && pros::millis() - start_time < 1500) angler::move_voltage(-12000);
+  pros::delay(100);
+  angler::m_motor.tare_position();
   angler::hold();
   lift::move_voltage(0);
   lift::hold();
@@ -28,7 +30,8 @@ void flip_out(){
 
 
 void autonomous() {
-
+  chassis::tare_position(0);
+  chassis::tare_orientation(0);
   chassis::move_voltage(-5000);
   flip_out();
 
@@ -44,5 +47,5 @@ void autonomous() {
   // blue_protected_four();
 
 // skills
-  autons::skills_auton();
+  // autons::skills_auton();
 }

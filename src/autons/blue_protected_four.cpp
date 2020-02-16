@@ -30,7 +30,6 @@ namespace autons {
     // go to second orange cube
     chassis::move_by(-8 * units::INCHES);
     chassis::rotate_to(-70 * units::DEGREES, 5000);
-    chassis::rotate_to(-90 * units::DEGREES, 500);
     chassis::move_by(16 * units::INCHES, 1500, 6000);
     intake::hold();
     chassis::rotate_to(-126 * units::DEGREES, chassis::Side::LEFT, 1200, 5000);

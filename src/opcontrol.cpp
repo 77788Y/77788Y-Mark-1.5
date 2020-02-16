@@ -25,20 +25,22 @@ void opcontrol() {
   int start_time = pros::millis();
   units::Angle lift_target = lift::POS_MIN;
 
-  lift::move_voltage(-6000);
-  while (angler::pos > angler::POS_RETRACTED - 25 * units::DEGREES && pros::millis() - start_time < 600) angler::move_voltage(12000);
-  while (angler::pos < angler::POS_RETRACTED && pros::millis() - start_time < 1500) angler::move_voltage(-12000);
-  angler::hold();
-  lift::move_voltage(0);
-  lift::hold();
-  pros::delay(100);
-  while (lift::pos < lift::POS_MIN + 10 * units::DEGREES && pros::millis() - start_time < 1500) lift::move_voltage(12000);
-  lift::move_voltage(-8000);
-  pros::delay(350);
-  lift::move_voltage(-3000);
-  pros::delay(200);
-  lift::m_motor.tare_position();
-  lift::hold();
+  // lift::move_voltage(-6000);
+  // while (angler::pos > angler::POS_RETRACTED - 25 * units::DEGREES && pros::millis() - start_time < 600) angler::move_voltage(12000);
+  // while (angler::pos < angler::POS_RETRACTED && pros::millis() - start_time < 1500) angler::move_voltage(-12000);
+  // pros::delay(100);
+  // angler::m_motor.tare_position();
+  // angler::hold();
+  // lift::move_voltage(0);
+  // lift::hold();
+  // pros::delay(100);
+  // while (lift::pos < lift::POS_MIN + 10 * units::DEGREES && pros::millis() - start_time < 1500) lift::move_voltage(12000);
+  // lift::move_voltage(-8000);
+  // pros::delay(350);
+  // lift::move_voltage(-3000);
+  // pros::delay(200);
+  // lift::m_motor.tare_position();
+  // lift::hold();
 
 	bool started_in_intake = false;
 

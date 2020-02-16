@@ -14,7 +14,7 @@ namespace subsystems {
     // positions
     const units::Angle POS_MAX = 62 * units::DEGREES;
     const units::Angle POS_MIN = -31 * units::DEGREES;
-    const units::Angle POS_LOW_TOWER = 28 * units::DEGREES;
+    const units::Angle POS_LOW_TOWER = 26 * units::DEGREES;
     const units::Angle POS_HIGH_TOWER = 45 * units::DEGREES;
 
 

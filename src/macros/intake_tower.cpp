@@ -11,7 +11,7 @@ namespace macros {
     // move angler
     while (cube_detect.get_value() > 1700) {
       if ((Code) task->notify_take(true, 0) == CODE_INTERRUPT) return false;
-      subsystems::intake::move_voltage(12000);
+      // subsystems::intake::move_voltage(8000);
       pros::delay(10);
     }
     subsystems::intake::hold();

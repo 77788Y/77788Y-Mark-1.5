@@ -27,6 +27,7 @@ namespace autons {
     chassis::rotate_to(0 * units::DEGREES);
 
     // intake cube
+    intake::move_voltage(12000);
     macros::notify(macros::CODE_INTAKE_TOWER);
     chassis::move_to(12.25 * units::INCHES);
     intake::move_voltage(0);
@@ -57,10 +58,12 @@ namespace autons {
     chassis::rotate_to_bang(0 * units::DEGREES);
 
     // reset lift
+    intake::move_voltage(12000);
     macros::notify(macros::CODE_INTAKE_TOWER);
     lift::goto_async(lift::POS_MIN);
 
     // intake cube
+    pros::delay(1000);
     chassis::move_by(2 * units::INCHES);
     chassis::move_by(-2 * units::INCHES);
     intake::move_voltage(0);
@@ -91,6 +94,7 @@ namespace autons {
     chassis::rotate_to_bang(-5 * units::DEGREES, 5000);
     chassis::move_by(-7 * units::INCHES);
     chassis::move_voltage(-8000);
+    macros::notify(macros::CODE_INTERRUPT);
     pros::delay(1200);
     chassis::move_voltage(0);
     chassis::tare_orientation(0);
@@ -136,6 +140,7 @@ namespace autons {
     chassis::rotate_to_bang(-168 * units::DEGREES, 5000);
 
     // intake cube
+    intake::move_voltage(8000);
     macros::notify(macros::CODE_INTAKE_TOWER);
     chassis::move_by(20 * units::INCHES, 3500, 9500, 2000, 6 * units::INCHES, 1250, 10 * units::INCHES);
     chassis::move_by(-6 * units::INCHES);
@@ -173,6 +178,7 @@ namespace autons {
     chassis::rotate_to_bang(-200 * units::DEGREES, 5000);
 
     // intake cube
+    intake::move_voltage(8000);
     macros::notify(macros::CODE_INTAKE_TOWER);
     chassis::move_by(20 * units::INCHES);
 
@@ -180,7 +186,7 @@ namespace autons {
     chassis::move_by(-14 * units::INCHES);
 
     // rotate to tower
-    chassis::rotate_to_bang(-130 * units::DEGREES);
+    chassis::rotate_to_bang(-118 * units::DEGREES, 5000);
 
     // set lift position
     lift::goto_sync(lift::POS_LOW_TOWER);
@@ -205,6 +211,7 @@ namespace autons {
     lift::goto_sync(lift::POS_MIN);
 
     // intake cube
+    intake::move_voltage(8000);
     macros::notify(macros::CODE_INTAKE_TOWER);
     chassis::move_by(24 * units::INCHES);
 
