@@ -26,32 +26,41 @@ namespace autons {
     intake::move_voltage(12000);
     pros::delay(10);
     intake::move_voltage(12000);
-    chassis::move_to(36 * units::INCHES, 7000, 4500, 3000, 3 * units::INCHES, 2500, 3 * units::INCHES);
+    chassis::move_to(34 * units::INCHES, 8000, 4500, 3000, 3 * units::INCHES, 2500, 3 * units::INCHES);
+
+    // turn to cube
+    chassis::rotate_to(20 * units::DEGREES, 1200, 6000);
+
+    // intake cube
+    chassis::move_by(10 * units::INCHES);
     pros::delay(300);
     intake::hold();
 
+    // back out
+    chassis::move_by(-10 * units::INCHES);
+
     // turn to cube
-    chassis::rotate_to(18 * units::DEGREES, 1200, 6000);
+    chassis::rotate_to(0 * units::DEGREES, 1200, 6000);
 
     //go to intake cube
     intake::move_voltage(12000);
-    chassis::move_by(11 * units::INCHES, 3000, 4000);
+    chassis::move_by(13 * units::INCHES, 3000, 4000);
     pros::delay(100);
 
     // back out
-    chassis::move_by(-26.5 * units::INCHES, 5000, 10000, 4000, 2 * units::INCHES, 2000, 12 * units::INCHES, 1200);
+    chassis::move_by(-24.5 * units::INCHES, 5000, 10000, 4000, 2 * units::INCHES, 2000, 12 * units::INCHES, 1200);
     intake::hold();
 
     // rotate
     pros::delay(210);
     pros::delay(200);
-    chassis::rotate_to(-128 * units::DEGREES, 2000, 8500);
+    chassis::rotate_to(-135 * units::DEGREES, 2000, 8500);
     intake::move_voltage(-4200);
     pros::delay(310);
     intake::hold();
 
     // move to goal
-    chassis::move_by(6 * units::INCHES, 800, 10000, 2700, 6 * units::INCHES, 1100, 9.2 * units::INCHES);
+    chassis::move_by(16 * units::INCHES, 800, 10000, 2700, 6 * units::INCHES, 1100, 9.2 * units::INCHES);
     pros::delay(10);
     chassis::move_voltage(0, 5800);
     pros::delay(150);
