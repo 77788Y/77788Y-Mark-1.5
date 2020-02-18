@@ -41,10 +41,12 @@ void autonomous() {
 // red
   // red_unprotected_six();
   // red_protected_four();
+  // red_protected_seven();
 
 // blue
   // blue_unprotected_six();
   // blue_protected_four();
+  // blue_unprotected_seven();
 
 // skills
   // autons::skills_auton();
