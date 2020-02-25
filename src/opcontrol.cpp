@@ -25,22 +25,22 @@ void opcontrol() {
   int start_time = pros::millis();
   units::Angle lift_target = lift::POS_MIN;
 
-  // lift::move_voltage(-6000);
-  // while (angler::pos > angler::POS_RETRACTED - 25 * units::DEGREES && pros::millis() - start_time < 600) angler::move_voltage(12000);
-  // while (angler::pos < angler::POS_RETRACTED && pros::millis() - start_time < 1500) angler::move_voltage(-12000);
-  // pros::delay(100);
-  // angler::m_motor.tare_position();
-  // angler::hold();
-  // lift::move_voltage(0);
-  // lift::hold();
-  // pros::delay(100);
-  // while (lift::pos < lift::POS_MIN + 10 * units::DEGREES && pros::millis() - start_time < 1500) lift::move_voltage(12000);
-  // lift::move_voltage(-8000);
-  // pros::delay(350);
-  // lift::move_voltage(-3000);
-  // pros::delay(200);
-  // lift::m_motor.tare_position();
-  // lift::hold();
+  lift::move_voltage(-6000);
+  while (angler::pos > angler::POS_RETRACTED - 25 * units::DEGREES && pros::millis() - start_time < 600) angler::move_voltage(12000);
+  while (angler::pos < angler::POS_RETRACTED && pros::millis() - start_time < 1500) angler::move_voltage(-12000);
+  pros::delay(100);
+  angler::m_motor.tare_position();
+  angler::hold();
+  lift::move_voltage(0);
+  lift::hold();
+  pros::delay(100);
+  while (lift::pos < lift::POS_MIN + 10 * units::DEGREES && pros::millis() - start_time < 1500) lift::move_voltage(12000);
+  lift::move_voltage(-8000);
+  pros::delay(350);
+  lift::move_voltage(-3000);
+  pros::delay(200);
+  lift::m_motor.tare_position();
+  lift::hold();
 
 	bool started_in_intake = false;
 
@@ -116,7 +116,10 @@ void opcontrol() {
 				intake::move_voltage(-12000);
 				started_in_intake = cube_detect.get_value() < 1800;
 			}
-			else if (controller.btn_a) intake::move_voltage(-1000);
+			else if (controller.btn_a) {
+				if (angler::pos > angler::POS_LIFT) intake::move_voltage(-200);
+				else intake::move_voltage(-1000);
+			}
       else if (controller.btn_up_new == 1) {
         intake::move_voltage(12000, -12000);
 				started_in_intake = cube_detect.get_value() < 1800;
