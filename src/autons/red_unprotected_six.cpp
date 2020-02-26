@@ -1,4 +1,5 @@
 #include "main.h"
+#include "macros.hpp"
 #include "subsystems/lift.hpp"
 #include "subsystems/angler.hpp"
 #include "subsystems/chassis.hpp"
@@ -10,7 +11,7 @@ using namespace subsystems;
 namespace autons {
 
   void red_unprotected_six() {
-
+    pros::ADIAnalogIn cube_detect('H');
     int start_time = pros::millis();
 
     // tare orientation
@@ -35,6 +36,7 @@ namespace autons {
 
     //go to intake cube
     intake::move_voltage(12000);
+    macros::notify(macros::CODE_INTAKE_TOWER);
     chassis::move_by(11 * units::INCHES, 3000, 4000);
     pros::delay(100);
 
@@ -43,19 +45,21 @@ namespace autons {
     intake::hold();
 
     // rotate
-    pros::delay(210);
     pros::delay(200);
-    chassis::rotate_to(-128 * units::DEGREES, 2000, 8500);
-    intake::move_voltage(-4200);
-    pros::delay(310);
-    intake::hold();
+    chassis::rotate_to(-132 * units::DEGREES, 2000, 8500);
 
     // move to goal
-    chassis::move_by(6 * units::INCHES, 800, 10000, 2700, 6 * units::INCHES, 1100, 9.2 * units::INCHES);
+    chassis::move_by(10 * units::INCHES, 800, 10000, 2700, 6 * units::INCHES, 1100, 9.2 * units::INCHES);
     pros::delay(10);
-    chassis::move_voltage(0, 5800);
-    pros::delay(150);
-    chassis::move_voltage(0, 0);
+
+    // make sure cubes are in place
+    while (cube_detect.get_value() < 1700) {
+      intake::move_voltage(-1000);
+    }
+    intake::hold();
+    // chassis::move_voltage(0, 5800);
+    // pros::delay(150);
+    // chassis::move_voltage(0, 0);
     pros::delay(100);
     chassis::hold();
 
