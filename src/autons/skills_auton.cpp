@@ -63,10 +63,11 @@ namespace autons {
     lift::goto_async(lift::POS_MIN);
 
     // intake cube
-    pros::delay(1000);
-    chassis::move_by(2 * units::INCHES);
-    chassis::move_by(-2 * units::INCHES);
-    intake::move_voltage(0);
+    chassis::move_by(-4 * units::INCHES);
+    chassis::move_by(8 * units::INCHES);
+    chassis::move_by(-4 * units::INCHES);
+    // pros::delay(1000);
+    intake::hold();
 
     // rotate to tower
     chassis::rotate_to_bang(-48 * units::DEGREES, 5000);
@@ -104,19 +105,23 @@ namespace autons {
 
     // intake cubes for stack
     intake::move_voltage(12000);
-    chassis::move_by(109 * units::INCHES, 11000, 5000, 4000, 8 * units::INCHES);
+    chassis::move_by(110 * units::INCHES, 11000, 5000, 4000, 8 * units::INCHES);
     intake::hold();
 
     // rotate to goal
     chassis::rotate_to_bang(-35 * units::DEGREES, 6000);
+    // chassis::rotate_to_bang(-35 * units::DEGREES, 6000);
 
     // move to goal
-    chassis::move_by(11 * units::INCHES);
+    chassis::move_voltage(7000);
+    pros::delay(850);
     chassis::hold();
+    chassis::move_by(-2 * units::INCHES);
 
     // dump load
-    intake::move_voltage(-1000);
     while (angler::pos > angler::POS_DEPOSIT + 9 * units::DEGREES) {
+      if (angler::pos > angler::POS_LIFT) intake::move_voltage(-200);
+      else intake::move_voltage(-1000);
       angler::update_auto_deposit();
       pros::delay(10);
     }
@@ -124,8 +129,8 @@ namespace autons {
     intake::move_voltage(0);
 
     // make sure load is fully in place
-    chassis::move_voltage(2000);
-    pros::delay(750);
+    chassis::move_voltage(2200);
+    pros::delay(1000);
 
     // back out
     chassis::move_by(-26.5 * units::INCHES, 3000, 9000, 1500, 3.5 * units::INCHES);
@@ -137,12 +142,13 @@ namespace autons {
     angler::m_motor.move_absolute(320, 200);
 
     // rotate to cube
-    chassis::rotate_to_bang(-168 * units::DEGREES, 5000);
+    chassis::rotate_to_bang(-165 * units::DEGREES, 5000);
+    // chassis::rotate_to_bang(-168 * units::DEGREES, 2000);
 
     // intake cube
     intake::move_voltage(8000);
     macros::notify(macros::CODE_INTAKE_TOWER);
-    chassis::move_by(20 * units::INCHES, 3500, 9500, 2000, 6 * units::INCHES, 1250, 10 * units::INCHES);
+    chassis::move_by(22 * units::INCHES, 3500, 9500, 2000, 6 * units::INCHES, 1250, 10 * units::INCHES);
     chassis::move_by(-6 * units::INCHES);
     intake::hold();
 
@@ -163,7 +169,7 @@ namespace autons {
     lift::goto_async(lift::POS_MIN);
 
     // straigten out
-    chassis::rotate_to_bang(-180 * units::DEGREES, 5000);
+    // chassis::rotate_to_bang(-180 * units::DEGREES, 5000);
 
     // recalibrate
     chassis::move_voltage(-10000);
@@ -178,7 +184,7 @@ namespace autons {
     chassis::rotate_to_bang(-200 * units::DEGREES, 5000);
 
     // intake cube
-    intake::move_voltage(8000);
+    intake::move_voltage(12000);
     macros::notify(macros::CODE_INTAKE_TOWER);
     chassis::move_by(20 * units::INCHES);
 
@@ -186,7 +192,7 @@ namespace autons {
     chassis::move_by(-14 * units::INCHES);
 
     // rotate to tower
-    chassis::rotate_to_bang(-118 * units::DEGREES, 5000);
+    chassis::rotate_to_bang(-120 * units::DEGREES, 5000);
 
     // set lift position
     lift::goto_sync(lift::POS_LOW_TOWER);
