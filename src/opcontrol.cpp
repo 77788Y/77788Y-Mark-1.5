@@ -61,8 +61,10 @@ void opcontrol() {
 		else {
 
 			// exponential drive
-			double left  = (.25 * pow(5, fabs(controller.analog_left_y))  - .25) * generic::sign(controller.analog_left_y);
-			double right = (.25 * pow(5, fabs(controller.analog_right_y)) - .25) * generic::sign(controller.analog_right_y);
+			// double left  = (.25 * pow(5, fabs(controller.analog_left_y))  - .25) * generic::sign(controller.analog_left_y);
+			// double right = (.25 * pow(5, fabs(controller.analog_right_y)) - .25) * generic::sign(controller.analog_right_y);
+			double left  = controller.analog_left_y;
+			double right = controller.analog_right_y;
 
 			chassis::move_voltage(left * 12000.0, right * 12000.0);
 		}
